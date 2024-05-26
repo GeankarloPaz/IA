@@ -1,0 +1,57 @@
+import heapq
+
+def calcular_ruta(mapa, inicio, fin):
+    cola = [(0, inicio)]
+    visitados = set()
+    distancia = {inicio: 0}
+    ruta = {}
+
+    while cola:
+        (dist, actual) = heapq.heappop(cola)
+        if actual not in visitados:
+            visitados.add(actual)
+
+            for vecino, coste in mapa[actual].items():
+                old_cost = distancia.get(vecino, float('inf'))
+                new_cost = dist + coste
+                if new_cost < old_cost:
+                    heapq.heappush(cola, (new_cost, vecino))
+                    ruta[vecino] = actual
+                    distancia[vecino] = new_cost
+
+    camino = []
+    while fin:
+        camino.append(fin)
+        fin = ruta.get(fin)
+
+    return distancia, camino[::-1]
+
+def main():
+    mapa = {
+        'Bogotá': {'Medellín': 7, 'Cali': 10},
+        'Medellín': {'Bogotá': 7, 'Cali': 15, 'Barranquilla': 12},
+        'Cali': {'Bogotá': 10, 'Medellín': 15, 'Cartagena': 10},
+        'Barranquilla': {'Medellín': 12, 'Cartagena': 1},
+        'Cartagena': {'Cali': 10, 'Barranquilla': 1}
+    }
+
+    while True:
+        print("Ciudades disponibles: Bogotá, Medellín, Cali, Barranquilla, Cartagena")
+        inicio = input("Por favor, ingrese la ciudad de inicio: ")
+        fin = input("Por favor, ingrese la ciudad de destino: ")
+
+        if inicio not in mapa or fin not in mapa:
+            print("Una o ambas ciudades no están en la lista. Por favor, inténtelo de nuevo.")
+            continue
+
+        distancia, ruta = calcular_ruta(mapa, inicio, fin)
+
+        print(f"La distancia más corta es: {distancia[fin]}")
+        print(f"La ruta más corta es: {' -> '.join(ruta)}")
+
+        otra_ruta = input("¿Desea calcular otra ruta? (s/n): ")
+        if otra_ruta.lower() != 's':
+            break
+
+if __name__ == "__main__":
+    main()
