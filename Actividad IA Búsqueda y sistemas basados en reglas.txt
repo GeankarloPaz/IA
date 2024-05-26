@@ -28,25 +28,25 @@ def calcular_ruta(mapa, inicio, fin):
 
 def main():
     mapa = {
-        'Bogotá': {'Medellín': 7, 'Cali': 10},
-        'Medellín': {'Bogotá': 7, 'Cali': 15, 'Barranquilla': 12},
-        'Cali': {'Bogotá': 10, 'Medellín': 15, 'Cartagena': 10},
-        'Barranquilla': {'Medellín': 12, 'Cartagena': 1},
-        'Cartagena': {'Cali': 10, 'Barranquilla': 1}
+        'Engativa': {'Suba': 7, 'Usme': 10},
+        'Suba': {'Engativa': 7, 'Usme': 15, 'Fontibon': 12},
+        'Usme': {'Engativa': 10, 'Suba': 15, 'Sumapaz': 10},
+        'Fontibon': {'Suba': 12, 'Sumapaz': 1},
+        'Sumapaz': {'Usme': 10, 'Fontibon': 1}
     }
 
     while True:
-        print("Ciudades disponibles: Bogotá, Medellín, Cali, Barranquilla, Cartagena")
-        inicio = input("Por favor, ingrese la ciudad de inicio: ")
-        fin = input("Por favor, ingrese la ciudad de destino: ")
+        print("localidades disponibles: Engativa, Suba, Usme, Fontibon, Sumapaz")
+        inicio = input("Por favor, ingrese la localidad de inicio: ")
+        fin = input("Por favor, ingrese la localidad de destino: ")
 
         if inicio not in mapa or fin not in mapa:
-            print("Una o ambas ciudades no están en la lista. Por favor, inténtelo de nuevo.")
+            print("Una o ambas localidades no están en la lista. Por favor, inténtelo de nuevo.")
             continue
 
         distancia, ruta = calcular_ruta(mapa, inicio, fin)
 
-        print(f"La distancia más corta es: {distancia[fin]}")
+        print(f"La distancia más corta es: {distancia[fin]} km")
         print(f"La ruta más corta es: {' -> '.join(ruta)}")
 
         otra_ruta = input("¿Desea calcular otra ruta? (s/n): ")
